@@ -535,3 +535,67 @@ mybatis:
 ![img.png](images/img_5.png)
 
 #### 7. 如上述操作完成 产品服务与用户服务的接入数据源
+
+### 第四步：集成注册中心，Nacos
+
+#### 1. 搭建注册中心
+```shell
+# a. 下载页面：https://github.com/alibaba/nacos/releases/download/2.0.3/nacos-server-2.0.3.tar.gz
+# b. 解压并移动到 /usr/local/nacos 目录
+# c. 进入/usr/local/nacos/bin | ./startup.sh  -m standalone, 启动单机版注册中心
+```
+
+##### 启动成功,访问Nacos(http://192.168.174.11:8848/nacos  账号：nacos  密码：nacos)
+![img.png](images/img_6.png)
+
+![img.png](images/img_7.png)
+
+#### 2. 服务向注册中心进行注册
+
+#### 添加注册中心依赖
+```xml
+<!-- 注册中心依赖 -->
+<dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+</dependency>
+```
+
+#### 设置注册中心相关配置
+```yaml
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.174.11:8848
+        username: nacos
+        password: nacos
+```
+
+#### 启动类配置注解
+```java
+package com.explore.user;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+/**
+ * 用户服务 启动类
+ *
+ * @author: YuHaiQing
+ * @time: 2022/2/1 18:40
+ */
+@EnableDiscoveryClient  // 服务发现注解
+@SpringBootApplication
+public class UserApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(UserApplication.class,args);
+    }
+
+}
+```
+
+#### 所有服务相关的注册中心配置完成，启动后，如下图可知，服务已经注册成功！
+![img.png](img.png)

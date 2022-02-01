@@ -17,6 +17,12 @@ spring:
       min-idle: 3
       max-active: 10
       max-wait: 60000
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.174.11:8848
+        username: nacos
+        password: nacos
 
 mybatis:
   type-aliases-package: com.explore.order.mapper
