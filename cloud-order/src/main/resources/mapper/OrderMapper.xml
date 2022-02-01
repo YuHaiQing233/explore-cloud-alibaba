@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.explore.order.mapper.OrderMapper">
+
+    <resultMap id="orderMap" type="com.explore.order.domain.Order">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" javaType="java.lang.Long" />
+        <result column="product_id" property="productId" jdbcType="BIGINT" javaType="java.lang.Long" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="quantity" property="quantity" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result column="price" property="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+        <result column="order_status" property="orderStatus" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
+    </resultMap>
+
+    <insert id="createOrder" keyProperty="id" useGeneratedKeys="true">
+        insert into e_order(user_id,product_id,order_no,quantity,price,order_status,create_time,update_time)
+        values (#{order.userId},#{order.productId},#{order.orderNo},#{order.quantity},#{order.price},#{order.orderStatus},#{order.createTime},#{order.updateTime})
+    </insert>
+
+    <update id="updateOrderStatus" >
+        update e_order set orderStatus = #{orderStatus} where id = #{orderId}
+    </update>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.explore.product.mapper.ProductMapper">
+
+    <resultMap id="productMap" type="com.explore.product.domain.Product">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+        <result column="product_name" property="productName" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="inventory" property="inventory" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
+    </resultMap>
+
+    <update id="reduction">
+        update e_product
+        set inventory = inventory - #{quantity}
+        where id = #{productId}
+    </update>
+
+</mapper>

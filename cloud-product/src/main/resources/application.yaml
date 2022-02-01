@@ -1,0 +1,27 @@
+server:
+  port: 10002
+
+spring:
+  application:
+    name: cloud-product
+
+  datasource:
+    druid:
+      ######### 核心数据源配置 #########
+      url: jdbc:mysql://192.168.174.11:3306/explore_product?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      ######### 可选配置 #########
+      initial-size: 3
+      min-idle: 3
+      max-active: 10
+      max-wait: 60000
+
+mybatis:
+  type-aliases-package: com.explore.product.mapper
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    com.explore.product.mapper: debug

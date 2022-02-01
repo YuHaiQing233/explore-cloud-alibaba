@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.explore.user.mapper.UserMapper">
+
+    <resultMap id="userMap" type="com.explore.user.domain.User">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="age" property="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="balance" property="balance" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
+    </resultMap>
+
+    <select id="getById" resultMap="userMap" >
+        select
+               id,name,age,sex,balance,create_time,update_time
+        from e_user
+        where id = #{userId}
+    </select>
+
+    <update id="reduction">
+        update e_user set balance = balance - #{money} where id = #{userId}
+    </update>
+
+</mapper>
