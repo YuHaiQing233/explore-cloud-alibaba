@@ -1,9 +1,11 @@
 package com.explore.product.controller;
 
+import com.explore.base.ResultResponse;
 import com.explore.product.dto.ProductReductionRequest;
 import com.explore.product.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -24,13 +26,15 @@ public class ProductController {
 
 
     @GetMapping("/info")
-    public String info(){
-        return "服务名称: cloud-product, 端口: " + port;
+    public ResultResponse<String> info(){
+        return ResultResponse.success("服务名称: cloud-product, 端口: " + port);
     }
 
 
     @PostMapping("/reduction")
+    @Transactional(rollbackFor = Exception.class)
     public Boolean reduction(@RequestBody ProductReductionRequest request){
+        int number = 10 / 0 ;
         return productService.reduction(request);
     }
 

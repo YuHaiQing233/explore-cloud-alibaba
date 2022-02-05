@@ -4,7 +4,8 @@ server:
 spring:
   application:
     name: cloud-order
-
+  main:
+    allow-circular-references: true
   datasource:
     druid:
       ######### 核心配置 #########
@@ -23,11 +24,45 @@ spring:
         server-addr: 192.168.174.11:8848
         username: nacos
         password: nacos
+        namespace: 5f5b189f-1d18-4478-ad4e-e186e60310a8
+        group: CLOUD_GROUP
+    sentinel:
+      transport:
+        dashboard: 192.168.174.11:8080
+        port: 8719
+  zipkin:
+    base-url: http://192.168.174.11:9411
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1.0
+
+# Feign 启用Sentinel实现服务降级、熔断
+feign:
+  sentinel:
+    enabled: true
 
 mybatis:
   type-aliases-package: com.explore.order.mapper
-  mapper-locations: classpath:*.xml
+  mapper-locations: classpath:mapper/*.xml
 
 logging:
   level:
     com.explore.order.mapper: debug
+
+seata:
+  enabled: true
+  tx-service-group: cloud_order_tx_group
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 192.168.174.11:8848
+      namespace: 2b21d738-f843-46c5-9063-7c6413fb003a
+      group: SEATA_GROUP
+      application: seata-server
+  config:
+    type: nacos
+    nacos:
+      namespace: 2b21d738-f843-46c5-9063-7c6413fb003a
+      group: SEATA_GROUP
+      server-addr: 192.168.174.11:8848

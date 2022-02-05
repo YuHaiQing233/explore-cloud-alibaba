@@ -15,13 +15,13 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
     </resultMap>
 
-    <insert id="createOrder" keyProperty="id" useGeneratedKeys="true">
+    <insert id="createOrder" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
         insert into e_order(user_id,product_id,order_no,quantity,price,order_status,create_time,update_time)
         values (#{order.userId},#{order.productId},#{order.orderNo},#{order.quantity},#{order.price},#{order.orderStatus},#{order.createTime},#{order.updateTime})
     </insert>
 
     <update id="updateOrderStatus" >
-        update e_order set orderStatus = #{orderStatus} where id = #{orderId}
+        update e_order set order_status = #{orderStatus} where id = #{orderId}
     </update>
 
 </mapper>

@@ -1,7 +1,6 @@
 package com.explore.order.domain;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -50,7 +49,7 @@ public class Order implements Serializable {
     /**
      * 订单状态
      */
-    private Integer orderStatus;
+    private Integer orderStatus = 0;
 
     /**
      * 创建时间
@@ -60,6 +59,20 @@ public class Order implements Serializable {
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private LocalDateTime updateTime = LocalDateTime.now();
+
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public enum OrderStatus{
+
+        ongoing(0,"下单中"),
+        complete(1,"下单成功");
+
+        private int status;
+        private String desc;
+
+    }
 
 }

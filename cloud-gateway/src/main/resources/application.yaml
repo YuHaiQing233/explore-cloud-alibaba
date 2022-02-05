@@ -1,0 +1,46 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: cloud-gateway
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.174.11:8848
+        namespace: 5f5b189f-1d18-4478-ad4e-e186e60310a8
+        group: CLOUD_GROUP
+    sentinel:
+      transport:
+        dashboard: 192.168.174.11:8080
+        port: 8719
+      eager: true # 取消Sentinel控制台懒加载,即项目启动即连接sentinel
+#      scg:
+#        fallback:
+#          mode: response
+#          response-status: 403
+#          response-body: '{"code":403,"msg":"限流了"}'
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: user_route
+          uri: lb://cloud-user
+          predicates:
+            - Path=/api/user/**
+        - id: product_route
+          uri: lb://cloud-product
+          predicates:
+            - Path=/api/product/**
+        - id: order_route
+          uri: lb://cloud-order
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - AddRequestHeader=X-Request-Author, HaiQing.Yu
+
+
